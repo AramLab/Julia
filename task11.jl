@@ -1,31 +1,30 @@
-function num_horizontal_borders!(robot)
-    back_path = move_to_angle!(robot)
+include("functionsForRobot.jl")
+using HorizonSideRobots
+r=Robot(animate=true)
+
+function num_borders(r::Robot)
     side = Ost
-    num_borders = num_horizontal_borders!(robot, side)
-    while !isborder(robot, Nord)
-        move!(robot, Nord)
-        side = inverse(side)
-        num_borders += num_horizontal_borders!(robot,side)
-    end
-    move!(robot, back_path)
-    return num_borders
-end
-    
-function num_horizontal_borders!(robot, side) 
-    num_borders = 0
-    state = 0
-    while !isborder(robot, side)
-        move!(robot, side)
-        if state == 0
-            if isborder(robot, Nord) == true
-        state == 1
-            end
-        else 
-            if isborder(robot, Nord) == false
-                state = 0
-                num_borders += 1
+    num=0
+    while isborder(r,Nord)==false
+        while isborder(r,side)==false
+            if pass_the_borders(r,side) == true
+                num += 1
+                walk_by(r,side)
             end
         end
+        move!(r,Nord)
+        side = inverse(side)
     end
-    return num_borders
+    return num
 end
+function pass_the_borders(r::Robot,side::HorizonSide) 
+    while isborder(r,Nord)==false 
+        if isborder(r,side) == true
+            return false
+        end
+        move!(r,side) 
+    end
+    return true
+end
+walk_by(r::Robot,side::HorizonSide) = while isborder(r,Nord)==true move!(r,side) end
+inverse(side::HorizonSide)=HorizonSide(mod(Int(side)+2,4))

@@ -1,6 +1,6 @@
 include("functionsForRobot.jl")
 using HorizonSideRobots
-
+r = Robot(animate=true)
 
 #Задача 15
 

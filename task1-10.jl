@@ -1,4 +1,5 @@
 using HorizonSideRobots
+
 import HorizonSideRobots.move!
 
 function inverse_side(side::HorizonSide)::HorizonSide
@@ -93,7 +94,7 @@ function moves!(r::Robot, sides::NTuple{2, HorizonSide}, n_steps::Int)
     end
 end
 
-function move!(r::Robot, sides::NTuple{2, HorizonSide})
+function move(r::Robot, sides::NTuple{2, HorizonSide})
     for side in sides
         move!(r, side)
     end
